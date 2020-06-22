@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1 v-bind:value="name"></h1>
+        <h2>age {{age + "岁"}}</h2>
+        <input type="text" v-model="name"> 姓名
+        <button @click="getMsg">nihao</button>
+        <img :src="imgSrc" alt="获取图片失败">
+<!--        checked box -->
+        <input type="checkbox" name="man" v-model="manCheck" value="男人">
+<!--        select -->
+        <select name="selected" id="" v-model="mySelected">
+            <option value=""></option>
+        </select>
+        <h3>{{manCheck}}</h3>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                name: "xuanweilun",
+                age: '21',
+                imgSrc: 'jj',
+                manCheck: true,
+            },
+            mounted () {
+                var that = this;
+                axios
+                    .get('http://localhost:8001/name',{
+                        params:{
+                            name : this.name
+                        }
+                    })
+                    .then(function (response) {
+
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+            methods:{
+                getMsg: function(){
+                    var that = this;
+                    axios.get('http://localhost:8001/name',{
+                            params:{
+                                name : this.name
+                            }
+                        })
+                        .then(function e(res){
+                            console.log(that)
+                            var ajxRes = res.data;
+                            if(ajxRes.success){
+                                var person = ajxRes.data;
+                                that.name = person.name;
+                                that.age = person.age;
+                                that.imgSrc = person.imgSrc;
+                            }
+                        })
+                        .catch(function (error) { // 请求失败处理
+                            console.log(error);
+                        });
+                }
+            }
+
+        });
+    </script>
+<!--
+response => (this.name = response.data.data.name,this.age = response.data.data.age)
+-->
+</body>
+</html>
