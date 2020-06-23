@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="js/layui/css/layui.css">
+
+
+
+</head>
+<body>
+    <div id="app">
+        <h1>{{id}}</h1>
+        <input type="text" v-model="id" >
+        <hr>
+        <h1>{{name}}</h1>
+        <input type="text" v-model="name" value="姓名">
+        <hr>
+        <h2>年龄 {{age + "岁"}}</h2>
+        <input type="text" v-model="age" value="年龄">
+        <hr>
+        <hr>
+        <h2>{{headPic}}</h2>
+        <img v-bind:src="headPic" alt="获取图片失败">
+        <hr>
+        <!-- checked box -->
+        <input type="checkbox" name="man" v-model="marry" value="男人"> 已婚
+        <h3>{{marry}}</h3>
+        <hr>
+        <!-- select -->
+        <select name="selected" id="" v-model="habit">
+            <option value="show">爱好</option>
+            <option value="footBall">足球</option>
+            <option value="basketBall">篮球</option>
+            <option value="guitar">吉他</option>
+        </select>
+        <h3>selectValue: {{habit}}</h3>
+        <hr>
+        <button @click="getMsg">查询</button><hr>
+        <button @click="addMsg">创建</button><hr>
+        <button @click="editMsg">修改</button><hr>
+        <button @click="delMsg">删除</button>
+    </div>
+
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/jquery-1.4.2.js"></script>
+    <script src="js/layui/layui.all.js"></script>
+    <script src="js/rest.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                name: "李菲菲",
+                age: '28',
+                headPic: 'http://localhost:headPic.img',
+                marry: false,
+                habit: 'show',
+                id: '123',
+                url:'http://localhost:8001/person'
+            },
+            mounted () {
+            },
+            methods:{
+                getMsg: function(){
+                    getObject(this);
+                },
+                addMsg:function () {
+                    addObject(this);
+                },
+                delMsg: function(){
+                    delObject(this)
+                },
+                editMsg: function () {
+                    editObject(this);
+                }
+            }
+
+        });
+
+    </script>
+<!--
+response => (this.name = response.data.data.name,this.age = response.data.data.age)
+   // $.ajax({
+                    //     type: 'get',
+                    //     dataType: 'json',
+                    //     contentType: 'application/json',
+                    //     data:JSON.stringify(this.name),
+                    //     url: 'http://localhost:8001/name',
+                    //     success: function(data){
+                    //
+                    //     },
+                    //     err: function(data){
+                    //     }
+                    // });
+
+
+                     // console.log(this._data);
+                    // console.log(JSON.stringify(this._data));
+
+                    axios.get('http://localhost:8001/name',{
+                            params:this._data
+                        })
+-->
+</body>
+</html>
