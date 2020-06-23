@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>主页</title>
-    <script src="js/vue.js"></script>
-    <script src="js/axios.min.js"></script>
+
+
 </head>
 <body>
     <div id="app">
@@ -17,10 +17,15 @@
         <input type="checkbox" name="man" v-model="manCheck" value="男人">
 <!--        select -->
         <select name="selected" id="" v-model="mySelected">
-            <option value=""></option>
+            <option value="1">1</option>
+            <option value="5">2</option>
+            <option value="3">3</option>
         </select>
         <h3>{{manCheck}}</h3>
     </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
     <script>
         new Vue({
             el: "#app",
@@ -29,11 +34,11 @@
                 age: '21',
                 imgSrc: 'jj',
                 manCheck: true,
+                mySelected: 5
             },
             mounted () {
                 var that = this;
-                axios
-                    .get('http://localhost:8001/name',{
+                axios.get('http://localhost:8001/name',{
                         params:{
                             name : this.name
                         }
@@ -48,19 +53,27 @@
             methods:{
                 getMsg: function(){
                     var that = this;
+                    console.log(this._data);
+                    console.log(JSON.stringify(this._data));
+                    // $.ajax({
+                    //     type: 'get',
+                    //     dataType: 'json',
+                    //     contentType: 'application/json',
+                    //     data:JSON.stringify(this.name),
+                    //     url: 'http://localhost:8001/name',
+                    //     success: function(data){
+                    //
+                    //     },
+                    //     err: function(data){
+                    //     }
+                    // });
                     axios.get('http://localhost:8001/name',{
-                            params:{
-                                name : this.name
-                            }
+                            params:this._data
                         })
                         .then(function e(res){
-                            console.log(that)
                             var ajxRes = res.data;
                             if(ajxRes.success){
-                                var person = ajxRes.data;
-                                that.name = person.name;
-                                that.age = person.age;
-                                that.imgSrc = person.imgSrc;
+                                Object.assign(that,ajxRes.data);
                             }
                         })
                         .catch(function (error) { // 请求失败处理
@@ -70,6 +83,7 @@
             }
 
         });
+
     </script>
 <!--
 response => (this.name = response.data.data.name,this.age = response.data.data.age)
