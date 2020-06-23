@@ -1,58 +1,62 @@
-function getObject(target) {
-    let idUrl = target.url + '/' + target.id;
-    axios.get(idUrl)
+// 查询
+function setVue(vue,url,id,callback) {
+    axios.get(url+'/'+id)
         .then(function e(res){
-            let ajxRes = res.data;
-            if(ajxRes.success){
-                layer.msg(ajxRes.msg, {icon: 1,time: 1000},);
-                Object.assign(target,ajxRes.data);
+            let ajaxRes = res.data;
+            if(ajaxRes.success){
+                Object.assign(vue,ajaxRes.data);
+                if (callback && typeof callback == 'function') {
+                    callback()
+                }
             }else {
-                layer.msg(ajxRes.msg, {icon: 2,time: 700},);
+                layer.msg(ajaxRes.msg, {icon: 2,time: 700},);
             }
         })
         .catch(function (error) { // 请求失败处理
             console.log(error);
         });
-}
-function addObject(target) {
-    axios.post(target.url,target._data,"application/json")
+};
+// 增加
+function saveVue(vue,url,callback) {
+    axios.post(url,vue._data)
         .then(function (res) {
             let ajaxRes = res.data;
             if(ajaxRes.success){
-                alert("添加成功");
+                layer.msg(ajaxRes.msg, {icon: 1,time: 1000},callback);
             }else{
-                alert(ajaxRes.msg);
+                layer.msg(ajaxRes.msg, {icon: 2,time: 700},);
             }
         })
         .catch(function (error) { // 请求失败处理
             console.log(error);
         });
-}
-function editObject(target) {
-    let idUrl = target.url + '/' + target.id;
-    axios.put(idUrl,target._data,"application/json")
+};
+// 修改
+function updateVue(vue,url,id,callback) {
+    let idUrl = url + '/' + id;
+    axios.put(idUrl,vue._data,"application/json")
         .then(function (res) {
             let ajaxRes = res.data;
             if(ajaxRes.success){
-                alert("修改成功");
+                layer.msg(ajaxRes.msg, {icon: 1,time: 1000},callback);
             }else{
-                alert(ajaxRes.msg);
+                layer.msg(ajaxRes.msg, {icon: 2,time: 700},);
             }
         })
         .catch(function (error) { // 请求失败处理
             console.log(error);
         });
-}
-
-function delObject(target) {
-    let idUrl = target.url + '/' + target.id;
+};
+// 删除
+function delVue(url,id,callback) {
+    let idUrl = url + '/' + id;
     axios.delete(idUrl)
         .then(function (res) {
             var ajaxRes = res.data;
             if(ajaxRes.success){
-                alert("删除成功");
+                layer.msg(ajaxRes.msg, {icon: 1,time: 1000},callback);
             }else{
-                alert(ajaxRes.msg);
+                layer.msg(ajaxRes.msg, {icon: 2,time: 700},);
             }
         })
         .catch(function (error) { // 请求失败处理
