@@ -52,7 +52,7 @@ function delVue(url,id,callback) {
     let idUrl = url + '/' + id;
     axios.delete(idUrl)
         .then(function (res) {
-            var ajaxRes = res.data;
+            let ajaxRes = res.data;
             if(ajaxRes.success){
                 layer.msg(ajaxRes.msg, {icon: 1,time: 1000},callback);
             }else{

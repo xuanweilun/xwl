@@ -13,10 +13,10 @@
 
 </head>
 <body>
-    <button onclick="save()" style="margin-top: 100px;margin-left: 50%">增加</button>
-    <button onclick="del(1)" style="margin-top: 100px;margin-left: 50%">删除</button>
-    <button onclick="edit(1)" style="margin-top: 100px;margin-left: 50%">编辑</button>
-    <button onclick="check(1)" style="margin-top: 100px;margin-left: 50%">查询</button>
+    <button onclick="save()" style="margin-top: 100px;margin-left: 50px">增加</button>
+    <button onclick="del(1)" >删除</button>
+    <button onclick="edit(1)" >编辑</button>
+    <button onclick="check(1)" >查询</button>
     <!-- 增加 -->
     <div id="save" style="width: 500px;text-align: center" class="hide1">
         <h1>id: {{id}}</h1>
@@ -130,9 +130,11 @@
             habit: '',
             id: '',
         };
-        var vue1 = new Vue({el: "#check",data: formData});
-        var vue2 = new Vue({el: "#edit",data: formData});
-        var vue3 = new Vue({el: "#save",data: {
+
+
+        var vueCheck = new Vue({el: "#check",data: formData});
+        var vueEdit = new Vue({el: "#edit",data: formData});
+        var vueSave = new Vue({el: "#save",data: {
                 name: '',
                 age: '',
                 headPic: '',
@@ -140,6 +142,8 @@
                 habit: '',
                 id: '',
             }});
+
+
 
         //保存
         function save() {
@@ -150,10 +154,15 @@
                 content: $("#save"),
                 btn: ['确认', '取消'],
                 yes: function(index, layero){
-                    saveVue(vue3,url,function () {
-                        $("#save").css("display","none");
-                        layer.close(index);
+                    saveVue(vueSave,url,function () {
+                        // $("#save").css("display","none");
+                        // layer.close(index);
                     });
+                },
+                btn2:function(){
+                    //右上角关闭回调
+                    $("#save").css("display","none");
+                    //return false 开启该代码可禁止点击该按钮关闭
                 },
                 cancel: function(){
                     //右上角关闭回调
@@ -165,9 +174,7 @@
         //编辑
         function edit(id){
             //get data
-            setVue(vue2,url,1,openEditDialog());
-            //open frame
-            function openEditDialog(){
+            setVue(vueEdit,url,1,function(){
                 layer.open({
                     type:1,
                     title: '编辑',
@@ -175,11 +182,16 @@
                     content: $("#edit"),
                     btn: ['确认', '取消'],
                     yes: function(index, layero){
-                        updateVue(vue2,url,1,function () {
-                            $("#edit").css("display","none");
-                            layer.close(index);
+                        updateVue(vueEdit,url,1,function () {
+                            // $("#edit").css("display","none");
+                            // layer.close(index);
                         });
                         return true;
+                    },
+                    btn2:function(){
+                        //右上角关闭回调
+                        $("#edit").css("display","none");
+                        //return false 开启该代码可禁止点击该按钮关闭
                     },
                     cancel: function(){
                         //右上角关闭回调
@@ -187,13 +199,12 @@
                         //return false 开启该代码可禁止点击该按钮关闭
                     }
                 });
-            }
+            });
 
         }
         //查看
         function check(id) {
-            setVue(vue1,url,id,open);
-            function open(){
+            setVue(vueCheck,url,id,function () {
                 layer.open({
                     type:1,
                     title: '查看',
@@ -211,16 +222,19 @@
                         //return false 开启该代码可禁止点击该按钮关闭
                     }
                 });
-            }
+            });
         }
 
         function del(id) {
             layer.confirm('确定删除该数据?', {
                 title: '提示',
                 btn: ['确定', '取消'], //按钮
+                yes: function(index, layero){
+                    delVue(url,id,function (){
+                        layer.close(index)
+                    });
+                }
                 // shade: false //不显示遮罩
-            }, function (index) {
-                delVue(url,id);
             });
         }
 
