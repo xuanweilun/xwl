@@ -15,7 +15,7 @@ function setVue(vue,url,id,callback) {
         .catch(function (error) { // 请求失败处理
             console.log(error);
         });
-};
+}
 // 增加
 function saveVue(vue,url,callback) {
     axios.post(url,vue._data)
@@ -30,7 +30,7 @@ function saveVue(vue,url,callback) {
         .catch(function (error) { // 请求失败处理
             console.log(error);
         });
-};
+}
 // 修改
 function updateVue(vue,url,id,callback) {
     let idUrl = url + '/' + id;
@@ -46,7 +46,7 @@ function updateVue(vue,url,id,callback) {
         .catch(function (error) { // 请求失败处理
             console.log(error);
         });
-};
+}
 // 删除
 function delVue(url,id,callback) {
     let idUrl = url + '/' + id;

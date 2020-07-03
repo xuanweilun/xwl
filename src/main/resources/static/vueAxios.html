@@ -54,6 +54,14 @@
         <h1>id: {{id}}</h1>
         <input type="text" v-model="id" >
         <hr>
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+        <hr>
         <h1>{{name}}</h1>
         <input type="text" v-model="name" value="姓名">
         <hr>
@@ -68,8 +76,8 @@
         <h3>{{marry}}</h3>
         <hr>
         <!-- select -->
-        <select name="selected" id="" v-model="habit">
-            <option value="show">爱好</option>
+        <select name="selected"  v-model="habit">
+            <option disabled  value="show">爱好</option>
             <option value="footBall">足球</option>
             <option value="basketBall">篮球</option>
             <option value="guitar">吉他</option>
@@ -114,6 +122,7 @@
 <!--        <button @click="delMsg">删除</button>-->
     </div>
 
+
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/vue.js"></script>
     <script src="js/axios.min.js"></script>
@@ -121,6 +130,17 @@
     <script src="js/layui/layui.all.js"></script>
     <script src="js/rest.js"></script>
     <script>
+        layui.use('layim', function(layim){
+            //先来个客服模式压压精
+            layim.config({
+                brief: true //是否简约模式（如果true则不显示主面板）
+            }).chat({
+                name: '客服姐姐'
+                ,type: 'friend'
+                ,avatar: 'http://tp1.sinaimg.cn/5619439268/180/40030060651/1'
+                ,id: -2
+            });
+        });
         var url = 'person';
         var formData = {
             name: '',
@@ -129,6 +149,7 @@
             marry: false,
             habit: '',
             id: '',
+            picked: 'one'
         };
 
 
@@ -169,6 +190,19 @@
                     $("#save").css("display","none");
                     //return false 开启该代码可禁止点击该按钮关闭
                 }
+            });
+        }
+        //删除
+        function del(id) {
+            layer.confirm('确定删除该数据?', {
+                title: '提示',
+                btn: ['确定', '取消'], //按钮
+                yes: function(index, layero){
+                    delVue(url,id,function (){
+                        layer.close(index)
+                    });
+                }
+                // shade: false //不显示遮罩
             });
         }
         //编辑
@@ -225,22 +259,12 @@
             });
         }
 
-        function del(id) {
-            layer.confirm('确定删除该数据?', {
-                title: '提示',
-                btn: ['确定', '取消'], //按钮
-                yes: function(index, layero){
-                    delVue(url,id,function (){
-                        layer.close(index)
-                    });
-                }
-                // shade: false //不显示遮罩
-            });
-        }
 
 
-
-
+        //阻止默认行为 ( 表单提交 )
+        // event.preventDefault();
+        // 阻止冒泡
+        // event.stopPropagation();
     </script>
 <!--
 response => (this.name = response.data.data.name,this.age = response.data.data.age)
