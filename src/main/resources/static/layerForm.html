@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="js/layui/css/layui.css">
+    <script src="js/jquery-1.4.2.js"></script>
 </head>
 <body>
-
-<form action="" class="layui-form">
-    <div class="layui-form-item" style="width: 600px">
+<div style="padding-top:40px;padding-right: 30px" id="myContent">
+<form action="" class="layui-form" >
+    <div class="layui-form-item " >
         <label class="layui-form-label">输入框</label>
         <div class="layui-input-block">
-            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input layui-form-text">
         </div>
     </div>
 
@@ -22,7 +23,7 @@
         </div>
         <div class="layui-form-mid layui-word-aux">辅助文字</div>
     </div>
-    <div class="layui-form-item" style="width: 200px">
+    <div class="layui-form-item">
         <label class="layui-form-label">选择框</label>
         <div class="layui-input-block">
             <select name="city" lay-verify="required">
@@ -41,7 +42,7 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item ">
         <label class="layui-form-label">复选框</label>
         <div class="layui-input-block">
             <input type="checkbox" name="like[write]" title="写作">
@@ -49,8 +50,14 @@
             <input type="checkbox" name="like[dai]" title="发呆">
         </div>
     </div>
-</form>
+    <div style="padding-left: 50px">
+        <textarea id="demo" style="display: none;"></textarea>
+    </div>
 
+</form>
+</div>
+<!--<button onclick="fun1()" style="align-content: center">弹窗</button>-->
+<!--<button onclick="fun2()" style="align-content: center">222</button>-->
 <script src="js/layui/layui.js"></script>
 <script>
     //Demo
@@ -62,6 +69,36 @@
             return false;
         });
     });
+    let layEdit;
+    function fun1() {
+        layer.open({
+            type:1,
+            title: '查看',
+            area: ['900px', '600px'],
+            content: $("#myContent"),
+            btn: ['确认', '取消'],
+            yes: function(index, layero){
+                alert(layEdit.getText());
+                $("#myContent").css("display","none");
+                layer.close(index);
+            },
+            btn2:function(){
+                $("#myContent").css("display","none");
+                return true;
+            },
+            cancel: function(){
+                $("#myContent").css("display","none");
+                return true;
+            }
+
+        });
+    }
+        layEdit = layui.use('layedit', function(){
+            var layedit = layui.layedit;
+            layedit.build('demo',{
+                height: '200px',
+            }); //建立编辑器
+        });
 </script>
 
 </body>
