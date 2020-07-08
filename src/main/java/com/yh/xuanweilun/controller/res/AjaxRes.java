@@ -14,6 +14,13 @@ public class AjaxRes {
         this.data = data;
     }
 
+    public static AjaxRes msg(String message){
+        return new AjaxRes(false,message,null);
+    }
+    public static AjaxRes data(Object data,String message){
+        return new AjaxRes(true,message,data);
+    }
+
     public boolean isSuccess() {
         return success;
     }

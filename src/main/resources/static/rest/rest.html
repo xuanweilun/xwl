@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rest</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/jquery-1.4.2.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css">
+    <script src="rest.js"></script>
+    <style>
+        .hide1 {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<button onclick="save()" style="margin-top: 100px;margin-left: 50px">增加</button>
+<button onclick="del(1)" >删除</button>
+<button onclick="edit(1)" >编辑</button>
+<button onclick="check(1)" >查询</button>
+<!-- 增加 -->
+<div id="save" style="width: 500px;text-align: center" class="hide1">
+    <h1>id: {{id}}</h1>
+    <input type="text" v-model="id" >
+    <hr>
+    <h1>{{name}}</h1>
+    <input type="text" v-model="name" value="姓名">
+    <hr>
+    <h2>年龄 {{age + "岁"}}</h2>
+    <input type="text" v-model="age" value="年龄">
+    <hr>
+    <hr>
+    <img v-bind:src="headPic" alt="获取图片失败" width="100px" height="100px">
+    <hr>
+    <!-- checked box -->
+    <input type="checkbox" name="man" v-model="marry" value="男人"> 已婚
+    <h3>{{marry}}</h3>
+    <hr>
+    <!-- select -->
+    <select name="selected" id="" v-model="habit">
+        <option value="show">爱好</option>
+        <option value="footBall">足球</option>
+        <option value="basketBall">篮球</option>
+        <option value="guitar">吉他</option>
+    </select>
+    <h3>selectValue: {{habit}}</h3>
+    <hr>
+    <!--        <button @click="getMsg">查询</button>-->
+    <!--        <button @click="addMsg">创建</button>-->
+    <!--        <button @click="editMsg">修改</button>-->
+    <!--        <button @click="delMsg">删除</button>-->
+</div>
+<!-- 查询 -->
+<div id="check" style="width: 500px;text-align: center" class="hide1">
+    <h1>id: {{id}}</h1>
+    <input type="text" v-model="id" >
+    <hr>
+    <input type="radio" id="one" value="One" v-model="picked">
+    <label for="one">One</label>
+    <br>
+    <input type="radio" id="two" value="Two" v-model="picked">
+    <label for="two">Two</label>
+    <br>
+    <span>Picked: {{ picked }}</span>
+    <hr>
+    <h1>{{name}}</h1>
+    <input type="text" v-model="name" value="姓名">
+    <hr>
+    <h2>年龄 {{age + "岁"}}</h2>
+    <input type="text" v-model="age" value="年龄">
+    <hr>
+    <hr>
+    <img v-bind:src="headPic" alt="获取图片失败" width="100px" height="100px">
+    <hr>
+    <!-- checked box -->
+    <input type="checkbox" name="man" v-model="marry" value="男人"> 已婚
+    <h3>{{marry}}</h3>
+    <hr>
+    <!-- select -->
+    <select name="selected"  v-model="habit">
+        <option disabled  value="show">爱好</option>
+        <option value="footBall">足球</option>
+        <option value="basketBall">篮球</option>
+        <option value="guitar">吉他</option>
+    </select>
+    <h3>selectValue: {{habit}}</h3>
+    <hr>
+    <!--        <button @click="getMsg">查询</button>-->
+    <!--        <button @click="addMsg">创建</button>-->
+    <!--        <button @click="editMsg">修改</button>-->
+    <!--        <button @click="delMsg">删除</button>-->
+</div>
+<!-- 编辑 -->
+<div id="edit" style="width: 500px;text-align: center" class="hide1">
+    <h1>id: {{id}}</h1>
+    <input type="text" v-model="id" >
+    <hr>
+    <h1>{{name}}</h1>
+    <input type="text" v-model="name" value="姓名">
+    <hr>
+    <h2>年龄 {{age + "岁"}}</h2>
+    <input type="text" v-model="age" value="年龄">
+    <hr>
+    <hr>
+    <img v-bind:src="headPic" alt="获取图片失败" width="100px" height="100px">
+    <hr>
+    <!-- checked box -->
+    <input type="checkbox" name="man" v-model="marry" value="男人"> 已婚
+    <h3>{{marry}}</h3>
+    <hr>
+    <!-- select -->
+    <select name="selected" v-model="habit">
+        <option value="show">爱好</option>
+        <option value="footBall">足球</option>
+        <option value="basketBall">篮球</option>
+        <option value="guitar">吉他</option>
+    </select>
+    <h3>selectValue: {{habit}}</h3>
+    <hr>
+</div>
+</body>
+<script type="text/javascript">
+    let vueSave = new Vue({el: '#save',data:{ id: '', name: '', age: '', headPic: '', marry: false, habit: '',}});
+    let vueEdit = new Vue({el: '#edit',data:{ id: '', name: '', age: '', headPic: '', marry: false, habit: '',}});
+    let vueCheck = new Vue({el: '#check',data:{picked:'One', id: '', name: '', age: '', headPic: '', marry: false, habit: '',}});
+
+    function save(id) {
+        layer.open({
+            type:1,
+            title: '添加',
+            area: ['600px', '450px'],
+            content: $("#save"),
+            btn: ['确认', '取消'],
+            yes: function(index, layero){
+                saveVue('/person',vueSave,layer.close(index));
+            },
+            btn2:function(){
+            },
+            cancel: function(){
+            }
+        });
+    }
+    function check(id) {
+        checkVue('/person/' + id,vueCheck,checkFun());
+        function checkFun() {
+            layer.open({
+                type:1,
+                title: '查看',
+                area: ['600px', '450px'],
+                content: $("#check"),
+                btn: ['确认', '取消'],
+                yes: function(index, layero){
+                    layer.close(index);
+                },
+                btn2:function(){
+                },
+                cancel: function(){
+                }
+
+            });
+        }
+    }
+    function edit(id) {
+        let url = '/person/' + id;
+        checkVue(url,vueEdit,checkFun());
+
+        function checkFun() {
+            layer.open({
+                type:1,
+                title: '查看',
+                area: ['600px', '450px'],
+                content: $("#edit"),
+                btn: ['确认', '取消'],
+                yes: function(index, layero){
+                    editVue(url,vueEdit,layer.close(index));
+                },
+                btn2:function(){
+                },
+                cancel: function(){
+                }
+
+            });
+        }
+
+    }
+    function del(id) {
+        layer.confirm('确定删除选中数据?', {
+            title: '提示',
+            btn: ['确定', '取消'], //按钮
+            // shade: false //不显示遮罩
+        }, function (index) {
+            delVue('/person/' + id,layer.close(index))
+        });
+    }
+
+</script>
+</html>
