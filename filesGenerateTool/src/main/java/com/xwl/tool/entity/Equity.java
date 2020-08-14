@@ -27,4 +27,5 @@ public class Equity {
     private String corGoodsId;
     private String serverCode;
     private String names;
+    private String sex;
 }
