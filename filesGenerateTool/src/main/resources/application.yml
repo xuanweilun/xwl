@@ -1,5 +1,7 @@
 server:
-  port: 8003
+  port: 8002
+
 spring:
   application:
-    name: xuan
+    name: fdsfa
+
