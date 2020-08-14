@@ -1,5 +1,7 @@
 package com.yh.xuanweilun.controller.res;
 
+import com.yh.xuanweilun.controller.res.sh.TZtShareInfoReviewNew;
+
 import java.lang.reflect.Field;
 
 /**
@@ -7,7 +9,7 @@ import java.lang.reflect.Field;
  */
 public class GetObjectJson {
 
-    private static Class<?> myClass = Person.class;
+    private static Class<?> myClass = TZtShareInfoReviewNew.class;
 
 
 

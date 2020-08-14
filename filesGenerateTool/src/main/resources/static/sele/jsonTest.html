@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.4.2.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="check">
+        <div v-for="name in names">
+            {{name}}
+        </div>
+    </div>
+</body>
+    let vueCheck = new Vue({
+        el:'#check',
+        data: ${names}
+
+    });
+</html>

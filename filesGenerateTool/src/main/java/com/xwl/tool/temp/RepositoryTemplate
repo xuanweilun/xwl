@@ -1,0 +1,16 @@
+package ${package};
+
+import ${entity};
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+
+/**
+  * @ClassName: ${entityName}Repository
+  * @Description: TODO
+  * @author ${creator}
+  * @date ${time}
+  */;
+public interface ${entityName}Repository extends JpaRepository<${entityName}, String>, QuerydslPredicateExecutor<${entityName}>, JpaSpecificationExecutor<${entityName}> {
+
+};

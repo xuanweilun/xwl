@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="hidden" name="type" id="type" class="type" value="${object.type}"/>
+    <div class="select_kuang">
+        <input type="text" onfocus="selectTog(this, '.type')" id="typename" placeholder="-请选择-" value="${object.typename}" disabled/>
+        <em onclick="selectTog(this, '.type')"></em>
+        <ul>
+            <li value="1">a</li>
+            <li value="2">b</li>
+            <li value="3">c</li>
+        </ul>
+    </div>
+    <script>
+        function selectTog(obj, cascade) {
+            $(obj).siblings("ul").toggle();
+            var input = $(obj).parent().find("input");
+            var valueinput = $(obj).parent().parent().find(cascade);
+            $(obj).siblings("ul").children("li").bind("click", function () {
+                var $this = $(this);
+                input.attr("value", $.trim($this.text()));
+                if (valueinput) {
+                    valueinput.attr("value", $this.attr("value"));
+                }
+                $this.parent().find(".selected").removeClass("selected");
+                $this.addClass("selected");
+                $this.parent().hide();
+            })
+            if (input.val() == "")
+                $(obj).siblings("ul").children("li.selected").removeClass("selected");
+        }
+    </script>
+</body>
+</html>

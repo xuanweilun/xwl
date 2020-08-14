@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.4.2.js"></script>
+    <script src="js/jquery-editable-select.js"></script>
+    <link rel="stylesheet" href="js/jquery-editable-select.css">
+</head>
+<body>
+
+<select id="editable-select" class="next-input-scnst" style="width: 200px;">
+    <option style="color:darkgray">Alfa Romeo</option>
+    <option>Audi</option>
+    <option>中国人民银行</option>
+    <option>中国人民</option>
+    <option>中国</option>
+    <option>BMW</option>
+</select>
+<script>
+
+    // function editableSelect(){
+    //     setSelectedOption("#editable-select")
+        $('#editable-select').editableSelect({
+            filter: false
+            // bg_iframe: false,
+            // case_sensitive: false,
+            // items_then_scroll: 10 ,
+            // isFilter:false,
+            // effects:'slide'
+        });
+    // }
+
+    //设置可编辑下拉的默认值
+    // function setSelectedOption(selector){
+    //     $(selector +" > option").eq(1).attr("selected",true);//设置第一个下拉为默认值
+    // }
+</script>
+</body>
+</html>
